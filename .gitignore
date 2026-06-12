@@ -1,6 +1,14 @@
 # Python virtual environments
 .venv/
 .venv-1/
+env/
+venv/
+ENV/
+
+# Python bytecode
+__pycache__/
+*.py[codz]
+*$py.class
 
 # Build artifacts
 *.zip
@@ -12,3 +20,15 @@ Thumbs.db
 # IDE
 .vscode/
 .idea/
+
+# Jupyter
+.ipynb_checkpoints
+
+# Environment
+.env
+.envrc
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
