@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>潘建泽 · 个人主页</title>
+  <!-- SEO / Open Graph -->
+  <meta name="description" content="潘建泽 — 江南大学自动化本科（27届）。求职意向：PLC工程师 / 嵌入式工程师。熟悉STM32开发、PLC梯形图、PID控制与系统仿真。联系方式：1289600019@qq.com。">
+  <meta name="keywords" content="潘建泽, 自动化, 嵌入式, PLC, STM32, PID, 江南大学, 简历">
+  <meta name="author" content="潘建泽">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://PJZ-a.github.io/pjz/">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:site_name" content="潘建泽 · 个人主页">
+  <meta property="og:title" content="潘建泽 · 自动化 / 嵌入式工程师">
+  <meta property="og:description" content="江南大学 自动化 本科（27届）。求职：PLC工程师 / 嵌入式工程师。熟悉 STM32、PLC、MATLAB/Simulink。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://PJZ-a.github.io/pjz/">
+  <meta property="og:image" content="https://PJZ-a.github.io/pjz/assets/og-banner.png">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="潘建泽 · 自动化 / 嵌入式工程师">
+  <meta name="twitter:description" content="江南大学 自动化 本科（27届）。求职：PLC工程师 / 嵌入式工程师。熟悉 STM32、PLC、MATLAB/Simulink。">
+  <meta name="twitter:image" content="https://PJZ-a.github.io/pjz/assets/og-banner.png">
+
+  <!-- JSON-LD Person Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "潘建泽",
+    "gender": "Male",
+    "birthDate": "2005-05-13",
+    "email": "mailto:1289600019@qq.com",
+    "telephone": "19235238779",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "无锡",
+      "addressRegion": "江苏",
+      "addressCountry": "中国"
+    },
+    "alumniOf": {
+      "@type": "CollegeOrUniversity",
+      "name": "江南大学"
+    },
+    "jobTitle": "PLC 工程师 / 嵌入式工程师",
+    "description": "江南大学自动化本科（27届）。熟悉STM32嵌入式开发、PLC梯形图编程、PID控制与系统仿真（MATLAB/Simulink）。",
+    "skills": ["STM32", "C", "PLC", "PID", "MATLAB", "Simulink"],
+    "url": "https://PJZ-a.github.io/pjz/"
+  }
+  </script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <nav class="nav">
+    <a href="#about">关于</a>
+    <a href="#edu">教育</a>
+    <a href="#skills">技能</a>
+    <a href="#projects">项目</a>
+    <a href="#contact">联系方式</a>
+  </nav>
+
+  <header class="hero" id="about">
+    <div class="hero-inner">
+      <h1>潘建泽</h1>
+      <p class="muted">江南大学 27 届 · 自动化 · Male</p>
+      <p class="lead">籍贯：江苏淮安 · 现居：江苏无锡</p>
+      <p class="summary">你好！我是潘建泽，一名热爱自动化与嵌入式系统的工程师。Welcome — let’s build smart systems together.</p>
+      <div class="quick">
+        <a class="btn" href="#projects">查看项目</a>
+        <a class="btn ghost" href="#contact">联系我</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section id="edu" class="card">
+      <h2>教育 Background</h2>
+      <p><strong>江南大学</strong> — 自动化，本科（2023.09 — 2027.07）</p>
+      <p>主修课程：程序设计基础（C）、电路原理、自动控制原理、模拟/数字电子技术、现代控制理论、嵌入式原理及应用、PLC 与电气控制、运动控制与过程控制等。</p>
+    </section>
+
+    <section id="skills" class="card">
+      <h2>技能 Skills</h2>
+      <ul class="skills">
+        <li>STM32 嵌入式开发、C 语言</li>
+        <li>PLC 梯形图编程（信捷 XD 系列）</li>
+        <li>PID 控制、系统建模与仿真（MATLAB/Simulink）</li>
+        <li>工具：Keil、STM32CubeMX、触摸屏组态、I2C/PWM 外设驱动</li>
+        <li>证书：大学英语 CET-4、计算机二级</li>
+      </ul>
+    </section>
+
+    <section id="projects" class="card">
+      <h2>项目 Projects</h2>
+      <ol>
+        <li>
+          <strong>基于 STM32F103 的温度自适应风扇控制系统</strong>
+          <p>使用 STM32F103、DS18B20 采集温度，采用 PWM 闭环调节 DC 电机转速。驱动 OLED（I2C）实时显示温度/转速/电压，按键控制启停，完成硬件调试与闭环控制实现。</p>
+        </li>
+        <li>
+          <strong>信捷 PLC 温度采集与控制系统</strong>
+          <p>基于 XD 系列 PLC（XD-E8AD / XD-E4AD），实现温度采集与加热控制，编写梯形图实现 PID 闭环、逻辑联锁与触摸屏通信，完成现场接线与参数整定。</p>
+        </li>
+        <li>
+          <strong>双闭环直流调速系统（课堂/实验）</strong>
+          <p>使用 MATLAB/Simulink 建模转速-电流双闭环，设计 PI 调节器并完成触发电路校准、参数整定与动态特性测试。</p>
+        </li>
+      </ol>
+    </section>
+
+    <section id="contact" class="card contact">
+      <h2>联系方式 Contact</h2>
+      <p>邮箱: <a href="mailto:1289600019@qq.com">1289600019@qq.com</a></p>
+      <p>手机号: <a href="tel:19235238779">19235238779</a></p>
+      <p>求职意向：PLC 工程师 / 嵌入式工程师</p>
+      <p>欢迎交流合作或投递岗位。</p>
+
+      <div class="qr">
+        <p class="muted">扫码添加微信 / Scan to add on WeChat</p>
+        <img alt="联系方式二维码" src="assets/wechat.jpg">
+      </div>
+
+      <p style="margin-top:12px;"><a class="btn" href="简历.docx" download>下载我的简历（DOCX）</a></p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <small>© 2026 潘建泽 · Automation Engineer · 江苏无锡</small>
+  </footer>
+</body>
+</html>

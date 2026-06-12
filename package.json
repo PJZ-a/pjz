@@ -1,0 +1,12 @@
+{
+  "name": "pan-jianze-homepage",
+  "version": "1.0.0",
+  "description": "潘建泽 个人主页 静态站点",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8080",
+    "build": "py -3 tools/package_site.py"
+  },
+  "author": "潘建泽",
+  "license": "MIT"
+}

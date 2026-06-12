@@ -1,0 +1,14 @@
+# Python virtual environments
+.venv/
+.venv-1/
+
+# Build artifacts
+*.zip
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
