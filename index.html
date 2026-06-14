@@ -55,6 +55,11 @@
   <div class="grain"></div>
   <canvas id="particles"></canvas>
   <div id="cursor-glow" class="cursor-glow"></div>
+  <div class="blobs">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
 
   <nav class="nav">
     <div class="nav-links">
@@ -72,6 +77,37 @@
 
   <header class="hero" id="about">
     <div class="hero-inner">
+      <div class="hero-illustration">
+        <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Outer ring -->
+          <circle cx="100" cy="100" r="88" stroke="currentColor" stroke-width="0.6" opacity="0.3"/>
+          <circle cx="100" cy="100" r="72" stroke="currentColor" stroke-width="0.5" opacity="0.2" stroke-dasharray="8 6"/>
+          <!-- Circuit board paths -->
+          <path d="M40 100 L65 100 L75 90 L95 90" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/>
+          <path d="M160 100 L135 100 L125 110 L105 110" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/>
+          <path d="M100 40 L100 65 L90 75 L90 90" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/>
+          <path d="M100 160 L100 135 L110 125 L110 110" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/>
+          <!-- Nodes -->
+          <circle cx="100" cy="100" r="10" stroke="currentColor" stroke-width="1.5" opacity="0.9"/>
+          <circle cx="100" cy="100" r="4" fill="currentColor" opacity="0.9"/>
+          <circle cx="95" cy="90" r="2.5" fill="currentColor" opacity="0.6"/>
+          <circle cx="75" cy="90" r="2" fill="currentColor" opacity="0.5"/>
+          <circle cx="90" cy="75" r="2" fill="currentColor" opacity="0.5"/>
+          <circle cx="105" cy="110" r="2.5" fill="currentColor" opacity="0.6"/>
+          <circle cx="125" cy="110" r="2" fill="currentColor" opacity="0.5"/>
+          <circle cx="110" cy="125" r="2" fill="currentColor" opacity="0.5"/>
+          <!-- Diagonal connections -->
+          <path d="M95 90 L75 90" stroke="currentColor" stroke-width="0.8" opacity="0.4"/>
+          <path d="M90 75 L90 90" stroke="currentColor" stroke-width="0.8" opacity="0.4"/>
+          <path d="M105 110 L125 110" stroke="currentColor" stroke-width="0.8" opacity="0.4"/>
+          <path d="M110 110 L110 125" stroke="currentColor" stroke-width="0.8" opacity="0.4"/>
+          <!-- Rotating outer dots -->
+          <circle cx="100" cy="12" r="3" fill="currentColor" opacity="0.5"/>
+          <circle cx="100" cy="188" r="2.5" fill="currentColor" opacity="0.35"/>
+          <circle cx="12" cy="100" r="2.5" fill="currentColor" opacity="0.35"/>
+          <circle cx="188" cy="100" r="3" fill="currentColor" opacity="0.5"/>
+        </svg>
+      </div>
       <div class="agent-badge">🤖 本页面由 AI Agent 协作构建</div>
       <h1>潘建泽</h1>
       <p class="hero-identity">
@@ -83,18 +119,24 @@
         <a class="btn" href="#projects">查看项目</a>
         <a class="btn ghost" href="#contact">联系我</a>
       </div>
+      <div class="scroll-hint" aria-hidden="true">
+        <span>向下滚动</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
     </div>
   </header>
 
   <main class="container">
     <section id="edu" class="card fade-up">
-      <h2>🎓 教育背景</h2>
+      <h2><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-7 10 7-10 7z"/><path d="M6 12v5c0 1.1 2.7 2 6 2s6-.9 6-2v-5"/></svg></span>教育背景</h2>
       <p><strong>江南大学</strong> — 自动化，本科（2023.09 — 2027.07）</p>
       <p>主修课程：程序设计基础（C）、电路原理、自动控制原理、模拟/数字电子技术、现代控制理论、嵌入式原理及应用、PLC 与电气控制、运动控制与过程控制等。</p>
     </section>
 
+    <div class="section-divider"><span>⬥</span></div>
+
     <section id="skills" class="card fade-up">
-      <h2>🛠 技能</h2>
+      <h2><span class="section-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span>技能</h2>
       <div class="skill-group">
         <h3>嵌入式 & 控制</h3>
         <ul class="skills">
@@ -121,23 +163,29 @@
       </div>
     </section>
 
+    <div class="section-divider"><span>⬥</span></div>
+
     <section id="projects" class="card fade-up">
-      <h2>📂 项目</h2>
+      <h2><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/><line x1="12" y1="11" x2="12" y2="17"/><polyline points="9 14 12 17 15 14"/></svg></span>项目</h2>
       <div id="projects-list" class="projects-grid">
         <p class="loading">加载中...</p>
       </div>
     </section>
 
+    <div class="section-divider"><span>⬥</span></div>
+
     <section id="ai" class="card fade-up">
-      <h2>🤖 AI 探索</h2>
+      <h2><span class="section-icon"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="12" y2="17"/></svg></span>AI 探索</h2>
       <p class="section-desc">我正在学习如何使用 AI Agent 提升开发效率。以下是我的实践记录：</p>
       <div id="posts-list">
         <p class="loading">加载中...</p>
       </div>
     </section>
 
+    <div class="section-divider"><span>⬥</span></div>
+
     <section id="contact" class="card contact fade-up">
-      <h2>📬 联系方式</h2>
+      <h2><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span>联系方式</h2>
       <p>邮箱: <a href="mailto:1289600019@qq.com">1289600019@qq.com</a></p>
       <p>手机号: <a href="tel:19235238779">19235238779</a></p>
       <p>求职意向：PLC 工程师 / 嵌入式工程师（27届暑期实习）</p>

@@ -9,18 +9,32 @@ const Render = {
   renderProjects(projects, containerId) {
     const container = document.getElementById(containerId);
     if (!container) return;
+    // Project icon mapping
+    const icons = {
+      'AI Agent': '🤖',
+      '嵌入式': '🔌',
+      'PLC': '⚙️',
+      '控制理论': '📈',
+      'default': '📂'
+    };
     container.innerHTML = projects
       .map(
         (p, i) => `
         <div class="project-card fade-up" style="transition-delay:${i * 0.1}s">
-          <div class="project-tag">${p.tag}</div>
-          <h3>${p.title}</h3>
-          <p>${p.desc}</p>
-          ${p.link ? `<a href="${p.link}" target="_blank" class="project-link">查看详情 →</a>` : ''}
+          <div class="project-card-img">
+            <span class="tech-icon">${icons[p.tag] || icons['default']}</span>
+          </div>
+          <div class="project-card-body">
+            <div class="project-tag">${p.tag}</div>
+            <h3>${p.title}</h3>
+            <p>${p.desc}</p>
+            ${p.link ? `<a href="${p.link}" target="_blank" class="project-link">查看详情 →</a>` : ''}
+          </div>
         </div>`
       )
       .join('');
     ScrollAnim.init(); // re-bind for new elements
+    if (typeof Effects !== 'undefined') Effects.refreshSpotlight();
   },
 
   renderPosts(posts, containerId) {
@@ -38,5 +52,6 @@ const Render = {
       )
       .join('');
     ScrollAnim.init();
+    if (typeof Effects !== 'undefined') Effects.refreshSpotlight();
   }
 };
