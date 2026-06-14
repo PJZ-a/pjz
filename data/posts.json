@@ -1,0 +1,20 @@
+[
+  {
+    "date": "2026-06",
+    "title": "用 Claude Code 搭建个人主页",
+    "desc": "从零开始，用自然语言指挥 AI Agent 完成页面结构设计、暗色/亮色主题、打字效果、滚动动画、JSON 动态渲染，并部署到 GitHub Pages。全程无需手写一行 CSS。",
+    "tags": ["Claude Code", "GitHub Pages", "AI Agent"]
+  },
+  {
+    "date": "2026-06",
+    "title": "探索 AI 编程工具链",
+    "desc": "正在学习和使用 Claude Code、GitHub Copilot 等 AI 编程助手，体验从代码补全到完整功能生成的不同层次的 AI 辅助开发。关注 Prompt Engineering 和 Agent 工作流设计。",
+    "tags": ["Prompt Engineering", "Copilot", "Agent Workflow"]
+  },
+  {
+    "date": "2026-05",
+    "title": "自动化 + AI 的交叉探索",
+    "desc": "思考如何将 AI Agent 能力引入自动化领域：智能参数整定、故障诊断、控制策略优化等方向。正在学习基础的机器学习与控制理论结合的方法。",
+    "tags": ["AI+Automation", "ML", "Control"]
+  }
+]

@@ -35,6 +35,7 @@ jobs:
           # replace placeholders in index.html with actual repo info and switch to PNG
           sed "s|<你的用户名>|${{ github.repository_owner }}|g; s|<仓库名>|${{ github.event.repository.name }}|g; s|assets/og-banner.svg|assets/og-banner.png|g" index.html > site/index.html
           cp styles.css README.md 简历.docx .nojekyll site/ || true
+          cp -r js data site/ || true
           mkdir -p site/assets
           cp -r assets/* site/assets/
 
