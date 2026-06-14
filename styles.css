@@ -348,6 +348,89 @@ body::after {
   50% { transform: translateY(-12px); }
 }
 
+/* === 两侧科技装饰 === */
+.side-deco {
+  position: fixed;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.35;
+  transition: opacity 0.8s ease;
+  will-change: transform;
+}
+.side-deco svg {
+  display: block;
+  width: auto;
+  height: auto;
+  color: var(--accent);
+  filter: drop-shadow(0 0 18px var(--accent-glow));
+}
+
+/* 左侧 — 机器人 */
+.side-deco--left {
+  left: clamp(10px, 5vw, 60px);
+  top: 45%;
+  transform: translateY(-50%);
+}
+.side-deco--left svg {
+  width: 100px;
+  height: 180px;
+  animation: float-left 5s ease-in-out infinite;
+}
+
+/* 右侧 — 齿轮芯片 */
+.side-deco--right {
+  right: clamp(10px, 5vw, 60px);
+  top: 42%;
+  transform: translateY(-50%);
+}
+.side-deco--right svg {
+  width: 100px;
+  height: 150px;
+  animation: float-right 5.5s ease-in-out infinite;
+}
+
+.side-deco--right svg g {
+  transform-origin: 60px 75px;
+  animation: spin-gear 20s linear infinite;
+}
+
+/* 浮游与旋转关键帧 */
+@keyframes float-left {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25%  { transform: translateY(-14px) rotate(1deg); }
+  50%  { transform: translateY(-6px) rotate(0deg); }
+  75%  { transform: translateY(-18px) rotate(-1deg); }
+}
+
+@keyframes float-right {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  30%  { transform: translateY(-16px) rotate(-1deg); }
+  60%  { transform: translateY(-5px) rotate(0.5deg); }
+  85%  { transform: translateY(-12px) rotate(1deg); }
+}
+
+@keyframes spin-gear {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* 滚动后淡化 — 由 JS 添加 .side-deco--dimmed */
+.side-deco--dimmed {
+  opacity: 0.06;
+}
+
+/* 移动端隐藏 */
+@media (max-width: 768px) {
+  .side-deco { display: none; }
+}
+
+/* 减少动效 */
+@media (prefers-reduced-motion: reduce) {
+  .side-deco--left svg,
+  .side-deco--right svg { animation: none; }
+  .side-deco--right svg g { animation: none; }
+}
+
 .agent-badge {
   display: inline-flex;
   align-items: center;
@@ -378,10 +461,21 @@ h1 {
   letter-spacing: -0.03em;
   line-height: 1.1;
   text-wrap: balance;
-  background: linear-gradient(135deg, var(--text) 0%, var(--text-secondary) 50%, var(--accent) 100%);
+  background: linear-gradient(135deg, #14b8a6 0%, #22d3bb 30%, #38bdf8 70%, #818cf8 100%);
+  background-size: 200% 200%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  animation: name-breath 6s ease-in-out infinite;
+}
+
+@keyframes name-breath {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  h1 { animation: none; }
 }
 
 .hero-identity {

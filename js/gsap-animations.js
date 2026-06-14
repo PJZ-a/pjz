@@ -28,6 +28,7 @@
   gsap.set('.muted',              { autoAlpha: 0, y: 15 });
   gsap.set('.summary',           { autoAlpha: 0, y: 20 });
   gsap.set('.quick .btn',        { autoAlpha: 0, y: 30, scale: 0.7 });
+  gsap.set('.side-deco',         { autoAlpha: 0 });
   gsap.set('.nav',                { autoAlpha: 0, y: -60 });
   gsap.set('.card, .section-divider, .footer', { autoAlpha: 0, y: 40 });
   gsap.set('.contact img',       { autoAlpha: 0, scale: 0.4, rotation: 15 });
@@ -76,6 +77,11 @@
       stagger: stag(0.05), ease: 'back.out(2)',
       duration: dur(0.3),
     }, 0.52)
+    // 0.10s 两侧装饰渐显
+    .to('.side-deco', {
+      autoAlpha: 0.35,
+      duration: dur(1.2), ease: 'power2.out',
+    }, 0.10)
     // 0.55s 徽章光晕脉冲
     .to('.agent-badge', {
       boxShadow: '0 0 50px rgba(20,184,166,0.45)',
@@ -87,6 +93,20 @@
     y: 0, autoAlpha: 1,
     duration: dur(0.5), ease: 'power3.out', delay: 0.05,
   });
+
+  // ── 两侧装饰：滚动超过 hero 后淡化 ────────────
+  if (!prefersReduced) {
+    gsap.to('.side-deco', {
+      scrollTrigger: {
+        trigger: '.hero',
+        start: 'bottom-=100 top',
+        end: 'bottom top',
+        scrub: 0.6,
+      },
+      opacity: 0.05,
+      ease: 'none',
+    });
+  }
 
   /* ================================================================
    *  2. 背景 Blob 视差（纯装饰，不影响任何内容元素）
