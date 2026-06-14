@@ -39,43 +39,57 @@
       });
 
       heroTL
-        // SVG spins in from nothing
+        // ═══ Hero 插画：旋转 + 缩放弹入 ═══
         .from('.hero-illustration', {
           scale: 0,
           rotation: -180,
           autoAlpha: 0,
-          duration: dur(0.9),
+          duration: dur(1.0),
           ease: 'back.out(1.5)',
         })
-        // Badge drops in
+        // ═══ Agent 徽章：从上方掉落 ═══
         .from(
           '.agent-badge',
           { y: -40, autoAlpha: 0, duration: dur(0.55), ease: 'back.out(1.7)' },
           '-=0.35',
         )
-        // Name rises
-        .from('h1', { y: 50, autoAlpha: 0 }, '-=0.2')
-        // Identity line
-        .from('.hero-identity', { y: 25, autoAlpha: 0 }, '-=0.15')
-        // Location muted
-        .from('.muted', { y: 18, autoAlpha: 0 }, '-=0.1')
-        // Summary paragraph
-        .from('.summary', { y: 25, autoAlpha: 0, duration: dur(0.8) }, '-=0.1')
-        // Buttons — bounce stagger
+        // 徽章脉冲光晕
+        .to('.agent-badge', {
+          boxShadow: '0 0 40px rgba(20,184,166,0.35)',
+          duration: 1.8,
+          ease: 'sine.inOut',
+          yoyo: true,
+          repeat: -1,
+        }, '-=0.3')
+        // ═══ 姓名：逐字感上升 ═══
+        .from('h1', {
+          y: 60,
+          autoAlpha: 0,
+          scale: 0.85,
+          duration: dur(0.75),
+          ease: 'power4.out',
+        }, '-=0.2')
+        // ═══ 身份行 ═══
+        .from('.hero-identity', { y: 30, autoAlpha: 0 }, '-=0.15')
+        // ═══ 籍贯 ═══
+        .from('.muted', { y: 20, autoAlpha: 0 }, '-=0.1')
+        // ═══ 简介段落 ═══
+        .from('.summary', { y: 30, autoAlpha: 0, duration: dur(0.8) }, '-=0.1')
+        // ═══ 按钮：弹性缩放弹入 ═══
         .from(
           '.quick .btn',
           {
-            y: 30,
+            y: 40,
             autoAlpha: 0,
-            scale: 0.7,
+            scale: 0.6,
             stagger: stagger(0.12),
-            ease: 'back.out(2)',
-            duration: dur(0.65),
+            ease: 'back.out(2.5)',
+            duration: dur(0.7),
           },
           '-=0.1',
         )
-        // Scroll hint fades last
-        .from('.scroll-hint', { autoAlpha: 0, y: -12 }, '-=0.05');
+        // ═══ 向下滚动提示 ═══
+        .from('.scroll-hint', { autoAlpha: 0, y: -16 }, '-=0.05');
 
       /* ================================================================
        *  2. NAV BAR — slide down on load
@@ -418,16 +432,37 @@
     ScrollTrigger.refresh();
   });
 
-  // ── Disable CSS scroll animations (GSAP handles reveals) ─
+  // ── GSAP 就绪：禁用 CSS 动画，准备 GSAP 控制 ──────
   document.addEventListener('DOMContentLoaded', () => {
     if (typeof ScrollAnim !== 'undefined') {
       ScrollAnim.enabled = false;
     }
-    // Set all fade-up elements to visible base state so GSAP from() works
+    // 重置 fade-up 元素：去掉 CSS transition，由 GSAP 接管
     document.querySelectorAll('.fade-up').forEach((el) => {
       el.style.opacity = '0';
       el.style.transform = 'none';
       el.style.transition = 'none';
     });
+  });
+})();
+
+// ──────────────────────────────────────────────────
+// 如果 GSAP 未加载（CDN 超时/被屏蔽），回退到 CSS 动画
+// ──────────────────────────────────────────────────
+(function () {
+  if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') return;
+
+  // GSAP 不可用 — 确保 CSS 动画正常工作
+  document.addEventListener('DOMContentLoaded', () => {
+    // 恢复 .fade-up 的 CSS 过渡能力
+    document.querySelectorAll('.fade-up').forEach((el) => {
+      el.style.opacity = '';
+      el.style.transform = '';
+      el.style.transition = '';
+    });
+    // 确保 ScrollAnim 正常工作
+    if (typeof ScrollAnim !== 'undefined') {
+      ScrollAnim.enabled = true;
+    }
   });
 })();

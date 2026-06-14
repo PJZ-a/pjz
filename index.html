@@ -49,8 +49,6 @@
   </script>
 
   <link rel="stylesheet" href="styles.css">
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
 </head>
 <body>
   <!-- Ambient Effects -->
@@ -209,6 +207,11 @@
     <small>© 2026 潘建泽 · 江南大学自动化大三 · 江苏无锡 · 🤖 AI Agent 协作构建</small>
   </footer>
 
+  <!-- GSAP: bootcdn (国内快) → jsdelivr (备用) -->
+  <script src="https://cdn.bootcdn.net/ajax/libs/gsap/3.12.5/dist/gsap.min.js"
+          onerror="this.onerror=null;this.src='https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js'"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/gsap/3.12.5/dist/ScrollTrigger.min.js"
+          onerror="this.onerror=null;this.src='https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js'"></script>
   <script src="js/theme.js"></script>
   <script src="js/typing.js"></script>
   <script src="js/scroll.js"></script>
