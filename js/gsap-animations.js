@@ -116,10 +116,9 @@
       });
 
       /* ================================================================
-       *  3. 环境视差 — Blob + 插画漂移（不影响内容阅读）
+       *  3. 环境视差 — Blob 背景漂移（不影响内容阅读）
        * ================================================================ */
       if (!reduceMotion) {
-        // Blob 深度视差
         gsap.to('.blob-1', {
           scrollTrigger: { trigger: 'body', start: 'top top', end: 'bottom bottom', scrub: 0.8 },
           y: 200, x: 100, scale: 1.3,
@@ -135,15 +134,6 @@
           y: -100, x: 120, scale: 1.2,
           ease: 'none',
         });
-
-        // 英雄插画轻微上移（保持可见，只做微妙的视差）
-        if (isDesktop) {
-          gsap.to('.hero-illustration', {
-            scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 0.6 },
-            y: 40, scale: 0.85, autoAlpha: 0.3,
-            ease: 'none',
-          });
-        }
       }
 
       /* ================================================================
