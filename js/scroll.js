@@ -1,6 +1,11 @@
 // Scroll-triggered fade-in animations using Intersection Observer
+// When GSAP is active, this is disabled to avoid conflicts
 const ScrollAnim = {
+  enabled: true,
+
   init() {
+    if (!this.enabled) return;
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {

@@ -35,6 +35,11 @@ const Render = {
       .join('');
     ScrollAnim.init(); // re-bind for new elements
     if (typeof Effects !== 'undefined') Effects.refreshSpotlight();
+    // Trigger GSAP animations for new cards
+    if (typeof GSAPAnimate !== 'undefined') {
+      GSAPAnimate.projects(container);
+      GSAPAnimate.refresh();
+    }
   },
 
   renderPosts(posts, containerId) {
@@ -53,5 +58,9 @@ const Render = {
       .join('');
     ScrollAnim.init();
     if (typeof Effects !== 'undefined') Effects.refreshSpotlight();
+    if (typeof GSAPAnimate !== 'undefined') {
+      GSAPAnimate.posts(container);
+      GSAPAnimate.refresh();
+    }
   }
 };
