@@ -32,7 +32,6 @@
   gsap.set('.card, .section-divider, .footer', { autoAlpha: 0, y: 40 });
   gsap.set('.contact img',       { autoAlpha: 0, scale: 0.4, rotation: 15 });
   gsap.set('.contact p',         { autoAlpha: 0, y: 15 });
-  gsap.set('.contact .btn',      { autoAlpha: 0, y: 15, scale: 0.85 });
 
   /* ================================================================
    *  1. HERO 入场 — 绝对时间定位，可靠无延迟
@@ -183,11 +182,14 @@
     y: 0, autoAlpha: 1,
     stagger: stag(0.04), duration: dur(0.35), ease: 'power3.out',
   });
-  gsap.to('.contact .btn', {
-    scrollTrigger: { trigger: '#contact', start: 'top 80%', once: true },
-    y: 0, autoAlpha: 1, scale: 1,
-    stagger: stag(0.06), duration: dur(0.4), ease: 'back.out(1.2)',
-  });
+  gsap.fromTo('.contact .btn',
+    { autoAlpha: 0, y: 15, scale: 0.85 },
+    {
+      scrollTrigger: { trigger: '#contact', start: 'top 80%', once: true },
+      autoAlpha: 1, y: 0, scale: 1,
+      stagger: stag(0.06), duration: dur(0.4), ease: 'back.out(1.2)',
+    }
+  );
 
   /* ================================================================
    *  6. 页脚
