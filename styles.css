@@ -372,8 +372,8 @@ body::after {
   transform: translateY(-50%);
 }
 .side-deco--left svg {
-  width: 100px;
-  height: 180px;
+  width: clamp(240px, 20vw, 480px);
+  height: auto;
   animation: float-left 5s ease-in-out infinite;
 }
 
@@ -384,8 +384,8 @@ body::after {
   transform: translateY(-50%);
 }
 .side-deco--right svg {
-  width: 100px;
-  height: 150px;
+  width: clamp(240px, 20vw, 480px);
+  height: auto;
   animation: float-right 5.5s ease-in-out infinite;
 }
 

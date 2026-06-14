@@ -94,20 +94,6 @@
     duration: dur(0.5), ease: 'power3.out', delay: 0.05,
   });
 
-  // ── 两侧装饰：滚动超过 hero 后淡化 ────────────
-  if (!prefersReduced) {
-    gsap.to('.side-deco', {
-      scrollTrigger: {
-        trigger: '.hero',
-        start: 'bottom-=100 top',
-        end: 'bottom top',
-        scrub: 0.6,
-      },
-      opacity: 0.05,
-      ease: 'none',
-    });
-  }
-
   /* ================================================================
    *  2. 背景 Blob 视差（纯装饰，不影响任何内容元素）
    * ================================================================ */
