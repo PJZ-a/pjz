@@ -79,7 +79,12 @@
     .to('.agent-badge', {
       boxShadow: '0 0 50px rgba(20,184,166,0.45)',
       duration: 1.8, ease: 'sine.inOut', yoyo: true, repeat: -1,
-    }, 0.55);
+    }, 0.55)
+    // 0.70s SVG 持续慢转
+    .to('.hero-illustration', {
+      rotation: 360,
+      duration: 25, ease: 'none', repeat: -1,
+    }, 0.70);
 
   // ── 导航栏 ──────────────────────────────────────
   gsap.to('.nav', {
