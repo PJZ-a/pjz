@@ -353,7 +353,7 @@ body::after {
   position: fixed;
   z-index: 1;
   pointer-events: none;
-  opacity: 0.35;
+  opacity: 0.55;
 }
 .side-deco svg {
   display: block;
@@ -384,12 +384,7 @@ body::after {
 .side-deco--right svg {
   width: clamp(240px, 20vw, 480px);
   height: auto;
-  animation: float-right 5.5s ease-in-out infinite;
-}
-
-.side-deco--right svg g {
-  transform-origin: 60px 75px;
-  animation: spin-gear 20s linear infinite;
+  animation: spin-gear 25s linear infinite;
 }
 
 /* 浮游与旋转关键帧 */
@@ -398,13 +393,6 @@ body::after {
   25%  { transform: translateY(-14px) rotate(1deg); }
   50%  { transform: translateY(-6px) rotate(0deg); }
   75%  { transform: translateY(-18px) rotate(-1deg); }
-}
-
-@keyframes float-right {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  30%  { transform: translateY(-16px) rotate(-1deg); }
-  60%  { transform: translateY(-5px) rotate(0.5deg); }
-  85%  { transform: translateY(-12px) rotate(1deg); }
 }
 
 @keyframes spin-gear {
@@ -426,7 +414,6 @@ body::after {
 @media (prefers-reduced-motion: reduce) {
   .side-deco--left svg,
   .side-deco--right svg { animation: none; }
-  .side-deco--right svg g { animation: none; }
 }
 
 .agent-badge {
