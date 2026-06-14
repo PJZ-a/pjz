@@ -354,8 +354,6 @@ body::after {
   z-index: 1;
   pointer-events: none;
   opacity: 0.35;
-  transition: opacity 0.8s ease;
-  will-change: transform;
 }
 .side-deco svg {
   display: block;
