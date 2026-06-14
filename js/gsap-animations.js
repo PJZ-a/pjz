@@ -35,44 +35,52 @@
   gsap.set('.contact .btn',      { autoAlpha: 0, y: 15, scale: 0.85 });
 
   /* ================================================================
-   *  1. HERO 入场 — 快节奏，一次性播完
+   *  1. HERO 入场 — 绝对时间定位，可靠无延迟
    * ================================================================ */
   const heroTL = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
   heroTL
-    // SVG 插画旋转弹入
+    // 0.00s SVG 插画旋转弹入
     .to('.hero-illustration', {
       scale: 1, rotation: 0, autoAlpha: 1,
-      duration: dur(0.8), ease: 'back.out(1.3)',
-    })
-    // 徽章掉落
+      duration: dur(0.7), ease: 'back.out(1.3)',
+    }, 0)
+    // 0.20s 徽章掉落
     .to('.agent-badge', {
       y: 0, autoAlpha: 1,
-      duration: dur(0.45), ease: 'back.out(1.7)',
-    }, '-=0.35')
-    .addLabel('badgeIn', '-=0.35')
-    // 徽章光晕脉冲
-    .to('.agent-badge', {
-      boxShadow: '0 0 50px rgba(20,184,166,0.45)',
-      duration: 1.8, ease: 'sine.inOut', yoyo: true, repeat: -1,
-    }, 'badgeIn+=0.3')
-    // 姓名 — 徽章开始掉落时立刻跟上
+      duration: dur(0.4), ease: 'back.out(1.7)',
+    }, 0.20)
+    // 0.25s 姓名（徽章开始后仅 0.05s）
     .to('h1', {
       y: 0, autoAlpha: 1, scale: 1,
       duration: dur(0.25), ease: 'power3.out',
-    }, 'badgeIn+=0.06')
-    // 身份行
-    .to('.hero-identity', { y: 0, autoAlpha: 1, duration: dur(0.2) }, 'badgeIn+=0.12')
-    // 籍贯
-    .to('.muted', { y: 0, autoAlpha: 1, duration: dur(0.18) }, 'badgeIn+=0.16')
-    // 简介
-    .to('.summary', { y: 0, autoAlpha: 1, duration: dur(0.25) }, 'badgeIn+=0.20')
-    // 按钮
+    }, 0.25)
+    // 0.35s 身份行
+    .to('.hero-identity', {
+      y: 0, autoAlpha: 1,
+      duration: dur(0.2),
+    }, 0.35)
+    // 0.40s 籍贯
+    .to('.muted', {
+      y: 0, autoAlpha: 1,
+      duration: dur(0.18),
+    }, 0.40)
+    // 0.45s 简介
+    .to('.summary', {
+      y: 0, autoAlpha: 1,
+      duration: dur(0.25),
+    }, 0.45)
+    // 0.52s 按钮
     .to('.quick .btn', {
       y: 0, autoAlpha: 1, scale: 1,
-      stagger: stag(0.06), ease: 'back.out(2)',
+      stagger: stag(0.05), ease: 'back.out(2)',
       duration: dur(0.3),
-    }, 'badgeIn+=0.26');
+    }, 0.52)
+    // 0.55s 徽章光晕脉冲
+    .to('.agent-badge', {
+      boxShadow: '0 0 50px rgba(20,184,166,0.45)',
+      duration: 1.8, ease: 'sine.inOut', yoyo: true, repeat: -1,
+    }, 0.55);
 
   // ── 导航栏 ──────────────────────────────────────
   gsap.to('.nav', {
