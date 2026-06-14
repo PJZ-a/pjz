@@ -12,6 +12,10 @@
   gsap.registerPlugin(ScrollTrigger);
   gsap.defaults({ duration: 0.6, ease: 'power3.out' });
 
+  // ── 立即禁用 CSS hero-float 动画（避免与 GSAP transform 冲突）──
+  const illEl = document.querySelector('.hero-illustration');
+  if (illEl) illEl.style.animation = 'none';
+
   // ── 无障碍：尊重用户减少动效偏好 ────────────────
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const isMobile = window.matchMedia('(max-width: 768px)').matches;
@@ -81,9 +85,9 @@
       duration: 1.8, ease: 'sine.inOut', yoyo: true, repeat: -1,
     }, 0.55);
 
-  // ── SVG 持续慢转（独立于 timeline，避免属性冲突）──
+  // ── SVG 持续慢转（独立于 timeline，相对旋转避免冲突）──
   gsap.to('.hero-illustration', {
-    rotation: 360,
+    rotation: '+=360',
     duration: 25, ease: 'none', repeat: -1,
     delay: 0.7,
   });
