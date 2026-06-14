@@ -45,33 +45,34 @@
       scale: 1, rotation: 0, autoAlpha: 1,
       duration: dur(0.8), ease: 'back.out(1.3)',
     })
-    // 徽章掉落 (更早重叠)
+    // 徽章掉落
     .to('.agent-badge', {
       y: 0, autoAlpha: 1,
       duration: dur(0.45), ease: 'back.out(1.7)',
-    }, '-=0.5')
-    // 徽章光晕脉冲
+    }, '-=0.35')
+    .addLabel('badgeIn')
+    // 徽章光晕脉冲（用 label 定位，不影响后续文字时序）
     .to('.agent-badge', {
       boxShadow: '0 0 50px rgba(20,184,166,0.45)',
       duration: 1.8, ease: 'sine.inOut', yoyo: true, repeat: -1,
-    }, '-=0.2')
-    // 姓名
+    }, 'badgeIn')
+    // 姓名 — 徽章出现后几乎立刻上升
     .to('h1', {
       y: 0, autoAlpha: 1, scale: 1,
       duration: dur(0.25), ease: 'power3.out',
-    }, '-=0.3')
+    }, 'badgeIn+=0.08')
     // 身份行
-    .to('.hero-identity', { y: 0, autoAlpha: 1, duration: dur(0.2) }, '-=0.2')
+    .to('.hero-identity', { y: 0, autoAlpha: 1, duration: dur(0.2) }, 'badgeIn+=0.16')
     // 籍贯
-    .to('.muted', { y: 0, autoAlpha: 1, duration: dur(0.18) }, '-=0.1')
+    .to('.muted', { y: 0, autoAlpha: 1, duration: dur(0.18) }, 'badgeIn+=0.22')
     // 简介
-    .to('.summary', { y: 0, autoAlpha: 1, duration: dur(0.25) }, '-=0.1')
+    .to('.summary', { y: 0, autoAlpha: 1, duration: dur(0.25) }, 'badgeIn+=0.28')
     // 按钮
     .to('.quick .btn', {
       y: 0, autoAlpha: 1, scale: 1,
       stagger: stag(0.06), ease: 'back.out(2)',
       duration: dur(0.3),
-    }, '-=0.08');
+    }, 'badgeIn+=0.34');
 
   // ── 导航栏 ──────────────────────────────────────
   gsap.to('.nav', {
