@@ -58,20 +58,20 @@
     // 姓名
     .to('h1', {
       y: 0, autoAlpha: 1, scale: 1,
-      duration: dur(0.5), ease: 'power4.out',
-    }, '-=0.2')
+      duration: dur(0.25), ease: 'power3.out',
+    }, '-=0.3')
     // 身份行
-    .to('.hero-identity', { y: 0, autoAlpha: 1, duration: dur(0.35) }, '-=0.25')
+    .to('.hero-identity', { y: 0, autoAlpha: 1, duration: dur(0.2) }, '-=0.2')
     // 籍贯
-    .to('.muted', { y: 0, autoAlpha: 1, duration: dur(0.3) }, '-=0.1')
+    .to('.muted', { y: 0, autoAlpha: 1, duration: dur(0.18) }, '-=0.1')
     // 简介
-    .to('.summary', { y: 0, autoAlpha: 1, duration: dur(0.45) }, '-=0.08')
+    .to('.summary', { y: 0, autoAlpha: 1, duration: dur(0.25) }, '-=0.1')
     // 按钮
     .to('.quick .btn', {
       y: 0, autoAlpha: 1, scale: 1,
-      stagger: stag(0.08), ease: 'back.out(2)',
-      duration: dur(0.45),
-    }, '-=0.06');
+      stagger: stag(0.06), ease: 'back.out(2)',
+      duration: dur(0.3),
+    }, '-=0.08');
 
   // ── 导航栏 ──────────────────────────────────────
   gsap.to('.nav', {
