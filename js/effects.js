@@ -1,4 +1,4 @@
-// Visual effects: particles, cursor glow, card spotlight tracking
+// Visual effects: particles, cursor glow, card spotlight, scroll progress, card tilt, back-to-top
 const Effects = {
   init() {
     this.initParticles();
@@ -6,6 +6,9 @@ const Effects = {
     this.initSpotlight();
     this.initSmoothScroll();
     this.initNavScroll();
+    this.initScrollProgress();
+    this.initBackToTop();
+    this.initCardTilt();
   },
 
   /* === Nav scroll shadow === */
@@ -19,7 +22,54 @@ const Effects = {
     onScroll();
   },
 
-  /* Re-init spotlight for dynamically added cards */
+  /* === Scroll Progress Bar === */
+  initScrollProgress() {
+    const bar = document.querySelector('.scroll-progress');
+    if (!bar) return;
+    const onScroll = () => {
+      const h = document.documentElement.scrollHeight - window.innerHeight;
+      bar.style.width = h > 0 ? (window.scrollY / h) * 100 + '%' : '0%';
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  },
+
+  /* === Back to Top === */
+  initBackToTop() {
+    const btn = document.querySelector('.back-to-top');
+    if (!btn) return;
+
+    const onScroll = () => {
+      btn.classList.toggle('visible', window.scrollY > 500);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    btn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  },
+
+  /* === Card 3D Tilt — 微妙的透视倾斜 === */
+  initCardTilt() {
+    if (window.matchMedia('(max-width: 768px)').matches) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    document.querySelectorAll('.card').forEach((card) => {
+      card.addEventListener('mouseenter', () => card.classList.add('tilt-active'));
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        card.style.transform = `perspective(1000px) rotateY(${x * 4}deg) rotateX(${-y * 3}deg)`;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.classList.remove('tilt-active');
+        card.style.transform = '';
+      });
+    });
+  },
+
+  /* Re-init for dynamic cards */
   refreshSpotlight() {
     this.initSpotlight();
   },
@@ -30,6 +80,7 @@ const Effects = {
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     let particles = [];
+    let animationId;
     const MAX = 80;
     const CONNECT_DIST = 130;
 
@@ -71,7 +122,6 @@ const Effects = {
         const r = isDark ? 180 : 20;
         const g = isDark ? 220 : 150;
         const b = isDark ? 200 : 140;
-        // Glow circle
         const grad = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size * 3);
         grad.addColorStop(0, `rgba(${r},${g},${b},${this.opacity})`);
         grad.addColorStop(1, `rgba(${r},${g},${b},0)`);
@@ -79,7 +129,6 @@ const Effects = {
         ctx.arc(this.x, this.y, this.size * 3, 0, Math.PI * 2);
         ctx.fillStyle = grad;
         ctx.fill();
-        // Core
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(${r},${g},${b},${Math.min(1, this.opacity * 1.5)})`;
@@ -87,10 +136,8 @@ const Effects = {
       }
     }
 
-    // Create particles — mix of data nodes and ambient particles
     for (let i = 0; i < MAX; i++) particles.push(new Particle());
 
-    // A few highlighted "data nodes"
     const dataNodes = [];
     for (let i = 0; i < 6; i++) {
       dataNodes.push({
@@ -109,10 +156,8 @@ const Effects = {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       const isDark = theme() === 'dark';
 
-      // Update and draw particles
       particles.forEach(p => { p.update(); p.draw(ctx, isDark); });
 
-      // Draw connection lines between nearby particles
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
           const dx = particles[i].x - particles[j].x;
@@ -133,11 +178,9 @@ const Effects = {
         }
       }
 
-      // Draw data nodes (pulsing connection hubs)
       dataNodes.forEach(node => {
         node.x += node.vx + Math.sin(frame * 0.02 + node.pulse) * 0.2;
         node.y += node.vy + Math.cos(frame * 0.02 + node.pulse) * 0.2;
-        // Bounce
         if (node.x < 0) { node.x = 0; node.vx *= -1; }
         if (node.x > canvas.width) { node.x = canvas.width; node.vx *= -1; }
         if (node.y < 0) { node.y = 0; node.vy *= -1; }
@@ -149,7 +192,6 @@ const Effects = {
         const b = isDark ? 180 : 130;
         const a = 0.35 + Math.sin(frame * 0.05 + node.pulse) * 0.15;
 
-        // Outer glow
         const grad = ctx.createRadialGradient(node.x, node.y, 0, node.x, node.y, pulseSize * 5);
         grad.addColorStop(0, `rgba(${r},${g},${b},${a})`);
         grad.addColorStop(1, 'rgba(0,0,0,0)');
@@ -158,7 +200,6 @@ const Effects = {
         ctx.fillStyle = grad;
         ctx.fill();
 
-        // Core
         ctx.beginPath();
         ctx.arc(node.x, node.y, pulseSize, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(${r},${g},${b},${a * 1.5})`;
@@ -169,7 +210,6 @@ const Effects = {
     };
     animate();
 
-    // Update data node positions on resize
     window.addEventListener('resize', () => {
       dataNodes.forEach(node => {
         node.x = Math.min(node.x, canvas.width);
@@ -205,6 +245,8 @@ const Effects = {
   /* === Card Spotlight === */
   initSpotlight() {
     document.querySelectorAll('.card').forEach(card => {
+      if (card.dataset.spotlightBound) return;
+      card.dataset.spotlightBound = '1';
       card.addEventListener('mousemove', (e) => {
         const rect = card.getBoundingClientRect();
         const x = ((e.clientX - rect.left) / rect.width) * 100;

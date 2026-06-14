@@ -132,7 +132,75 @@ body::before {
 /* === All content above effects === */
 .nav, .hero, .container, .footer { position: relative; z-index: 2; }
 
-/* === Navigation === */
+/* === Scroll Progress Bar === */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2.5px;
+  z-index: 200;
+  background: linear-gradient(90deg, var(--accent), #0ea5e9, var(--accent));
+  background-size: 200% 100%;
+  animation: progress-shimmer 2s linear infinite;
+  width: 0%;
+  border-radius: 0 1px 1px 0;
+  pointer-events: none;
+}
+
+@keyframes progress-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: 0 0; }
+}
+
+/* === Back to Top === */
+.back-to-top {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 99;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px);
+  transition: all 0.35s cubic-bezier(0.22, 0.61, 0.36, 1);
+  box-shadow: var(--shadow-md);
+}
+
+.back-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.back-to-top:hover {
+  background: var(--card-hover);
+  color: var(--accent);
+  border-color: rgba(20, 184, 166, 0.25);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg), var(--shadow-accent);
+}
+
+.back-to-top:active {
+  transform: scale(0.95);
+}
+
+/* === Card 3D Tilt === */
+.card.tilt-active {
+  transition: transform 0.15s ease-out, box-shadow 0.15s ease-out;
+}
+
+/* === Nav === */
 .nav {
   display: flex;
   justify-content: space-between;
@@ -864,6 +932,7 @@ html { scroll-behavior: smooth; scroll-padding-top: 64px; }
   .quick { flex-direction: column; align-items: center; }
 
   .cursor-glow { display: none; }
+  .back-to-top { bottom: 16px; right: 16px; width: 38px; height: 38px; }
 }
 
 @media (max-width: 480px) {

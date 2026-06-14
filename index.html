@@ -51,6 +51,8 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <!-- 滚动进度条 -->
+  <div class="scroll-progress"></div>
   <!-- Ambient Effects -->
   <div class="grain"></div>
   <canvas id="particles"></canvas>
@@ -206,6 +208,11 @@
   <footer class="footer">
     <small>© 2026 潘建泽 · 江南大学自动化大三 · 江苏无锡 · 🤖 AI Agent 协作构建</small>
   </footer>
+
+  <!-- 回到顶部 -->
+  <button class="back-to-top" aria-label="回到顶部" title="回到顶部">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+  </button>
 
   <!-- GSAP — 本地文件，零 CDN 依赖 -->
   <script src="js/vendor/gsap.min.js"></script>
