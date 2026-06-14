@@ -30,7 +30,7 @@
        *  0. 初始状态 — 一次性设定，不做反复切换
        * ================================================================ */
       gsap.set('.hero-illustration', { autoAlpha: 0, scale: 0, rotation: -180 });
-      gsap.set('.agent-badge', { autoAlpha: 0, y: -40 });
+      gsap.set('.agent-badge', { autoAlpha: 0, y: -40, boxShadow: '0 0 15px rgba(20,184,166,0.2)' });
       gsap.set('h1', { autoAlpha: 0, y: 60, scale: 0.85 });
       gsap.set('.hero-identity', { autoAlpha: 0, y: 30 });
       gsap.set('.muted', { autoAlpha: 0, y: 20 });
@@ -70,14 +70,16 @@
           duration: dur(0.6),
           ease: 'back.out(1.8)',
         }, '-=0.4')
-        // 徽章脉冲光晕（持续呼吸）
+        // 先设初始光晕再开始呼吸
+        .set('.agent-badge', { boxShadow: '0 0 15px rgba(20,184,166,0.2)' })
+        // 徽章脉冲光晕：暗 → 亮 → 暗 持续呼吸
         .to('.agent-badge', {
-          boxShadow: '0 0 40px rgba(20,184,166,0.35)',
+          boxShadow: '0 0 55px rgba(20,184,166,0.5)',
           duration: 2.0,
           ease: 'sine.inOut',
           yoyo: true,
           repeat: -1,
-        }, '-=0.3')
+        })
         // 姓名上升
         .to('h1', {
           y: 0,
@@ -356,6 +358,11 @@
       el.style.transition = 'none';
       el.classList.remove('visible');
     });
+    // 关键：禁用与 GSAP 冲突的 CSS animation
+    const heroIll = document.querySelector('.hero-illustration');
+    if (heroIll) heroIll.style.animation = 'none';
+    const badge = document.querySelector('.agent-badge');
+    if (badge) badge.style.animation = 'none';
   });
 })();
 

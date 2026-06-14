@@ -6,7 +6,6 @@ const Effects = {
     this.initSpotlight();
     this.initSmoothScroll();
     this.initNavScroll();
-    this.initScrollProgress();
     this.initBackToTop();
     this.initCardTilt();
   },
@@ -17,18 +16,6 @@ const Effects = {
     if (!nav) return;
     const onScroll = () => {
       nav.classList.toggle('scrolled', window.scrollY > 10);
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-  },
-
-  /* === Scroll Progress Bar === */
-  initScrollProgress() {
-    const bar = document.querySelector('.scroll-progress');
-    if (!bar) return;
-    const onScroll = () => {
-      const h = document.documentElement.scrollHeight - window.innerHeight;
-      bar.style.width = h > 0 ? (window.scrollY / h) * 100 + '%' : '0%';
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();

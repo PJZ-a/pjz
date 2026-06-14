@@ -132,26 +132,6 @@ body::before {
 /* === All content above effects === */
 .nav, .hero, .container, .footer { position: relative; z-index: 2; }
 
-/* === Scroll Progress Bar === */
-.scroll-progress {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 2.5px;
-  z-index: 200;
-  background: linear-gradient(90deg, var(--accent), #0ea5e9, var(--accent));
-  background-size: 200% 100%;
-  animation: progress-shimmer 2s linear infinite;
-  width: 0%;
-  border-radius: 0 1px 1px 0;
-  pointer-events: none;
-}
-
-@keyframes progress-shimmer {
-  0% { background-position: 200% 0; }
-  100% { background-position: 0 0; }
-}
-
 /* === Back to Top === */
 .back-to-top {
   position: fixed;
