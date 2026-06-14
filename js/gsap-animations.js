@@ -3,7 +3,6 @@
  * Depends on: gsap.min.js, ScrollTrigger.min.js (loaded before this file)
  */
 (function () {
-  // Guard — wait for GSAP to be available
   if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
     document.addEventListener('DOMContentLoaded', () => {
       if (typeof gsap === 'undefined') console.warn('GSAP not loaded — animations disabled');
@@ -31,8 +30,28 @@
       const stagger = (s = 0.08) => (reduceMotion ? 0 : s);
 
       /* ================================================================
+       *  0. INITIAL STATE — 用 gsap.set() 设定所有需要滚动揭示的元素
+       *     不用 CSS opacity:0，因为 gsap.from() 会读到它造成目标不可见
+       * ================================================================ */
+      gsap.set('.card, .section-divider, .footer, .post-card, .project-card, .scroll-hint', {
+        autoAlpha: 0,
+        y: 70,
+      });
+      gsap.set('.contact .qr img, .contact img', { autoAlpha: 0, scale: 0.4, rotation: 15 });
+      gsap.set('.contact p', { autoAlpha: 0, y: 20 });
+      gsap.set('.contact .btn', { autoAlpha: 0, y: 20, scale: 0.8 });
+      gsap.set('.hero-illustration', { autoAlpha: 0, scale: 0, rotation: -180 });
+      gsap.set('.agent-badge', { autoAlpha: 0 });
+      gsap.set('h1', { autoAlpha: 0, y: 60, scale: 0.85 });
+      gsap.set('.hero-identity', { autoAlpha: 0, y: 30 });
+      gsap.set('.muted', { autoAlpha: 0, y: 20 });
+      gsap.set('.summary', { autoAlpha: 0, y: 30 });
+      gsap.set('.quick .btn', { autoAlpha: 0, y: 40, scale: 0.6 });
+      gsap.set('.nav', { autoAlpha: 0, y: -80 });
+
+      /* ================================================================
        *  1. HERO ENTRANCE TIMELINE
-       *  Staggered entrance: illustration → badge → name → details → btns
+       *     改用 gsap.to() — 因为初始状态已由 gsap.set() 设定
        * ================================================================ */
       const heroTL = gsap.timeline({
         defaults: { duration: dur(0.75), ease: 'power4.out' },
@@ -40,17 +59,17 @@
 
       heroTL
         // ═══ Hero 插画：旋转 + 缩放弹入 ═══
-        .from('.hero-illustration', {
-          scale: 0,
-          rotation: -180,
-          autoAlpha: 0,
+        .to('.hero-illustration', {
+          scale: 1,
+          rotation: 0,
+          autoAlpha: 1,
           duration: dur(1.0),
           ease: 'back.out(1.5)',
         })
         // ═══ Agent 徽章：从上方掉落 ═══
-        .from(
+        .to(
           '.agent-badge',
-          { y: -40, autoAlpha: 0, duration: dur(0.55), ease: 'back.out(1.7)' },
+          { y: 0, autoAlpha: 1, duration: dur(0.55), ease: 'back.out(1.7)' },
           '-=0.35',
         )
         // 徽章脉冲光晕
@@ -61,27 +80,27 @@
           yoyo: true,
           repeat: -1,
         }, '-=0.3')
-        // ═══ 姓名：逐字感上升 ═══
-        .from('h1', {
-          y: 60,
-          autoAlpha: 0,
-          scale: 0.85,
+        // ═══ 姓名 ═══
+        .to('h1', {
+          y: 0,
+          autoAlpha: 1,
+          scale: 1,
           duration: dur(0.75),
           ease: 'power4.out',
         }, '-=0.2')
         // ═══ 身份行 ═══
-        .from('.hero-identity', { y: 30, autoAlpha: 0 }, '-=0.15')
+        .to('.hero-identity', { y: 0, autoAlpha: 1 }, '-=0.15')
         // ═══ 籍贯 ═══
-        .from('.muted', { y: 20, autoAlpha: 0 }, '-=0.1')
+        .to('.muted', { y: 0, autoAlpha: 1 }, '-=0.1')
         // ═══ 简介段落 ═══
-        .from('.summary', { y: 30, autoAlpha: 0, duration: dur(0.8) }, '-=0.1')
-        // ═══ 按钮：弹性缩放弹入 ═══
-        .from(
+        .to('.summary', { y: 0, autoAlpha: 1, duration: dur(0.8) }, '-=0.1')
+        // ═══ 按钮：弹性弹入 ═══
+        .to(
           '.quick .btn',
           {
-            y: 40,
-            autoAlpha: 0,
-            scale: 0.6,
+            y: 0,
+            autoAlpha: 1,
+            scale: 1,
             stagger: stagger(0.12),
             ease: 'back.out(2.5)',
             duration: dur(0.7),
@@ -89,14 +108,14 @@
           '-=0.1',
         )
         // ═══ 向下滚动提示 ═══
-        .from('.scroll-hint', { autoAlpha: 0, y: -16 }, '-=0.05');
+        .to('.scroll-hint', { autoAlpha: 0.5, y: 0 }, '-=0.05');
 
       /* ================================================================
        *  2. NAV BAR — slide down on load
        * ================================================================ */
-      gsap.from('.nav', {
-        y: -80,
-        autoAlpha: 0,
+      gsap.to('.nav', {
+        y: 0,
+        autoAlpha: 1,
         duration: dur(0.7),
         ease: 'power3.out',
         delay: 0.15,
@@ -119,7 +138,6 @@
           ease: 'none',
         });
 
-        // Agent badge also fades up
         gsap.to('.agent-badge', {
           scrollTrigger: {
             trigger: '.hero',
@@ -161,77 +179,72 @@
       }
 
       /* ================================================================
-       *  5. SECTION CARDS — scroll-triggered reveal with content stagger
+       *  5. SECTION CARDS — 滚动触发揭示 + 内容交错
+       *     全部改用 gsap.to()，初始状态已由 gsap.set() 设定
        * ================================================================ */
       gsap.utils.toArray('.card').forEach((card) => {
-        // Card container — scale-in from below
-        gsap.from(card, {
+        // 卡片主体 — 从下方淡入
+        gsap.to(card, {
           scrollTrigger: {
             trigger: card,
             start: isMobile ? 'top 92%' : 'top 85%',
             end: 'top 40%',
             toggleActions: 'play none none reverse',
           },
-          y: 70,
-          autoAlpha: 0,
+          y: 0,
+          autoAlpha: 1,
           duration: dur(0.9),
           ease: 'power3.out',
         });
 
-        // Section icon — spin-in with bounce
+        // Section icon — 旋转弹入
         const sectionIcon = card.querySelector('.section-icon');
         if (sectionIcon) {
-          gsap.from(sectionIcon, {
+          gsap.set(sectionIcon, { scale: 0, rotation: -120 });
+          gsap.to(sectionIcon, {
             scrollTrigger: {
               trigger: card,
               start: isMobile ? 'top 88%' : 'top 82%',
               toggleActions: 'play none none reverse',
             },
-            scale: 0,
-            rotation: -120,
+            scale: 1,
+            rotation: 0,
             duration: dur(0.55),
             ease: 'back.out(2)',
           });
         }
 
-        // Card heading text — rise
-        const heading = card.querySelector('h2');
-        if (heading) {
-          const textNode = heading.childNodes[heading.childNodes.length - 1];
-          if (textNode && textNode.nodeType === 3) {
-            // Animate the last text node
-          }
-        }
-
-        // Skill tags — staggered bounce in
+        // 技能标签 — 交错弹入
         const skillTags = card.querySelectorAll('.skills li');
         if (skillTags.length) {
-          gsap.from(skillTags, {
+          gsap.set(skillTags, { y: 25, autoAlpha: 0, scale: 0.7 });
+          gsap.to(skillTags, {
             scrollTrigger: {
               trigger: card,
               start: isMobile ? 'top 85%' : 'top 78%',
               toggleActions: 'play none none reverse',
             },
-            y: 25,
-            autoAlpha: 0,
-            scale: 0.7,
+            y: 0,
+            autoAlpha: 1,
+            scale: 1,
             stagger: stagger(0.04),
             duration: dur(0.4),
             ease: 'back.out(1.8)',
           });
         }
 
-        // Skill group headings — fade right
+        // 技能分组标题 — 从左侧淡入
         const groupHeadings = card.querySelectorAll('.skill-group h3');
         if (groupHeadings.length) {
-          gsap.from(groupHeadings, {
+          gsap.set(groupHeadings, { x: -20, autoAlpha: 0 });
+          gsap.to(groupHeadings, {
             scrollTrigger: {
               trigger: card,
               start: isMobile ? 'top 84%' : 'top 76%',
               toggleActions: 'play none none reverse',
             },
-            x: -20,
-            autoAlpha: 0,
+            x: 0,
+            autoAlpha: 1,
             stagger: stagger(0.08),
             duration: dur(0.4),
             ease: 'power3.out',
@@ -240,33 +253,34 @@
       });
 
       /* ================================================================
-       *  6. SECTION DIVIDERS — expand from center
+       *  6. SECTION DIVIDERS — 从中心扩展
        * ================================================================ */
       gsap.utils.toArray('.section-divider').forEach((divider) => {
-        gsap.from(divider, {
+        gsap.to(divider, {
           scrollTrigger: {
             trigger: divider,
             start: 'top 92%',
             toggleActions: 'play none none reverse',
           },
-          scaleX: 0,
-          autoAlpha: 0,
+          scaleX: 1,
+          autoAlpha: 1,
           duration: dur(0.6),
           ease: 'power3.inOut',
           transformOrigin: 'center center',
         });
 
-        // Diamond inside — pop
+        // 菱形图标 — 弹出
         const diamond = divider.querySelector('span');
         if (diamond) {
-          gsap.from(diamond, {
+          gsap.set(diamond, { scale: 0, rotation: 90 });
+          gsap.to(diamond, {
             scrollTrigger: {
               trigger: divider,
               start: 'top 90%',
               toggleActions: 'play none none reverse',
             },
-            scale: 0,
-            rotation: 90,
+            scale: 1,
+            rotation: 0,
             duration: dur(0.35),
             ease: 'back.out(2)',
             delay: 0.3,
@@ -275,96 +289,95 @@
       });
 
       /* ================================================================
-       *  7. CONTACT SECTION — QR code bounce, button stagger
+       *  7. CONTACT SECTION — QR 弹入 + 链接交错 + 按钮弹入
        * ================================================================ */
-      // QR code image
-      gsap.from('.contact img', {
+      gsap.to('.contact img', {
         scrollTrigger: {
           trigger: '#contact',
           start: 'top 78%',
           toggleActions: 'play none none reverse',
         },
-        scale: 0.4,
-        autoAlpha: 0,
-        rotation: 15,
+        scale: 1,
+        autoAlpha: 1,
+        rotation: 0,
         duration: dur(0.7),
         ease: 'back.out(1.7)',
       });
 
-      // Contact links — rise stagger
-      gsap.from('.contact p', {
+      gsap.to('.contact p', {
         scrollTrigger: {
           trigger: '#contact',
           start: 'top 82%',
           toggleActions: 'play none none reverse',
         },
-        y: 20,
-        autoAlpha: 0,
+        y: 0,
+        autoAlpha: 1,
         stagger: stagger(0.06),
         duration: dur(0.45),
         ease: 'power3.out',
       });
 
-      // Bottom buttons — scale stagger
-      gsap.from('.contact .btn', {
+      gsap.to('.contact .btn', {
         scrollTrigger: {
           trigger: '#contact',
           start: 'top 78%',
           toggleActions: 'play none none reverse',
         },
-        y: 20,
-        autoAlpha: 0,
-        scale: 0.8,
+        y: 0,
+        autoAlpha: 1,
+        scale: 1,
         stagger: stagger(0.1),
         duration: dur(0.5),
         ease: 'back.out(1.5)',
       });
 
       /* ================================================================
-       *  8. FOOTER — gentle rise
+       *  8. FOOTER — 温和上升
        * ================================================================ */
-      gsap.from('.footer', {
+      gsap.to('.footer', {
         scrollTrigger: {
           trigger: '.footer',
           start: 'top 96%',
           toggleActions: 'play none none reverse',
         },
-        y: 30,
-        autoAlpha: 0,
+        y: 0,
+        autoAlpha: 1,
         duration: dur(0.6),
         ease: 'power3.out',
       });
 
       /* ================================================================
-       *  9. POST CARDS — slide in from left (handles existing + dynamic)
+       *  9. POST CARDS — 从左侧滑入（静态 + 动态内容）
        * ================================================================ */
       function animatePosts(scope) {
         const posts = (scope || document).querySelectorAll('.post-card:not(.gsap-done)');
         if (!posts.length) return;
         posts.forEach((post) => {
           post.classList.add('gsap-done');
-          gsap.from(post, {
+          gsap.set(post, { x: -50, autoAlpha: 0 });
+          gsap.to(post, {
             scrollTrigger: {
               trigger: post,
               start: isMobile ? 'top 92%' : 'top 88%',
               toggleActions: 'play none none reverse',
             },
-            x: -50,
-            autoAlpha: 0,
+            x: 0,
+            autoAlpha: 1,
             duration: dur(0.55),
             ease: 'power3.out',
           });
-          // Tags fade-up stagger
+          // 标签淡入交错
           const tags = post.querySelectorAll('.tag');
           if (tags.length) {
-            gsap.from(tags, {
+            gsap.set(tags, { y: 10, autoAlpha: 0 });
+            gsap.to(tags, {
               scrollTrigger: {
                 trigger: post,
                 start: isMobile ? 'top 90%' : 'top 85%',
                 toggleActions: 'play none none reverse',
               },
-              y: 10,
-              autoAlpha: 0,
+              y: 0,
+              autoAlpha: 1,
               stagger: stagger(0.04),
               duration: dur(0.3),
               ease: 'power3.out',
@@ -373,40 +386,42 @@
         });
       }
 
-      // Initial pass
+      // 初始扫描
       animatePosts();
 
       /* ================================================================
-       *  10. PROJECT CARDS — scale + rise stagger (dynamic content)
+       *  10. PROJECT CARDS — 缩放 + 上升交错（动态内容）
        * ================================================================ */
       function animateProjects(scope) {
         const cards = (scope || document).querySelectorAll('.project-card:not(.gsap-done)');
         if (!cards.length) return;
         cards.forEach((card) => {
           card.classList.add('gsap-done');
-          gsap.from(card, {
+          gsap.set(card, { y: 40, autoAlpha: 0, scale: 0.88 });
+          gsap.to(card, {
             scrollTrigger: {
               trigger: card,
               start: isMobile ? 'top 90%' : 'top 85%',
               toggleActions: 'play none none reverse',
             },
-            y: 40,
-            autoAlpha: 0,
-            scale: 0.88,
+            y: 0,
+            autoAlpha: 1,
+            scale: 1,
             duration: dur(0.65),
             ease: 'back.out(1.3)',
           });
-          // Tech icon — pop
+          // 技术图标 — 弹出
           const icon = card.querySelector('.tech-icon');
           if (icon) {
-            gsap.from(icon, {
+            gsap.set(icon, { scale: 0, rotation: -60 });
+            gsap.to(icon, {
               scrollTrigger: {
                 trigger: card,
                 start: isMobile ? 'top 88%' : 'top 83%',
                 toggleActions: 'play none none reverse',
               },
-              scale: 0,
-              rotation: -60,
+              scale: 1,
+              rotation: 0,
               duration: dur(0.4),
               ease: 'back.out(2)',
               delay: 0.1,
@@ -415,10 +430,10 @@
         });
       }
 
-      // Initial pass for any static project cards
+      // 初始扫描
       animateProjects();
 
-      // Expose for dynamic content (called from render.js)
+      // 暴露给动态内容调用（render.js）
       window.GSAPAnimate = {
         projects: (container) => animateProjects(container),
         posts: (container) => animatePosts(container),
@@ -427,42 +442,41 @@
     },
   );
 
-  // ── Refresh after fonts/images load ─────────────────────
+  // ── 字体/图片加载完成后刷新 ScrollTrigger ──────────────
   window.addEventListener('load', () => {
     ScrollTrigger.refresh();
   });
 
-  // ── GSAP 就绪：禁用 CSS 动画，准备 GSAP 控制 ──────
+  // ── GSAP 就绪：禁用 CSS 动画，防止冲突 ──────────────────
   document.addEventListener('DOMContentLoaded', () => {
     if (typeof ScrollAnim !== 'undefined') {
       ScrollAnim.enabled = false;
     }
-    // 重置 fade-up 元素：去掉 CSS transition，由 GSAP 接管
+    // 清除 .fade-up 的 CSS transition，由 GSAP 接管
+    // 注意：不要设 opacity:0！gsap.set() 已经在上面的 matchMedia 中处理了初始状态
     document.querySelectorAll('.fade-up').forEach((el) => {
-      el.style.opacity = '0';
-      el.style.transform = 'none';
       el.style.transition = 'none';
+      el.classList.remove('visible');
     });
   });
 })();
 
 // ──────────────────────────────────────────────────
-// 如果 GSAP 未加载（CDN 超时/被屏蔽），回退到 CSS 动画
+// 如果 GSAP 未加载（本地文件缺失等情况），回退到 CSS 动画
 // ──────────────────────────────────────────────────
 (function () {
   if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') return;
 
-  // GSAP 不可用 — 确保 CSS 动画正常工作
   document.addEventListener('DOMContentLoaded', () => {
-    // 恢复 .fade-up 的 CSS 过渡能力
+    // 恢复 CSS 过渡能力
     document.querySelectorAll('.fade-up').forEach((el) => {
-      el.style.opacity = '';
-      el.style.transform = '';
       el.style.transition = '';
+      el.classList.remove('visible');
     });
-    // 确保 ScrollAnim 正常工作
+    // 启用 IntersectionObserver 动画
     if (typeof ScrollAnim !== 'undefined') {
       ScrollAnim.enabled = true;
+      ScrollAnim.init();
     }
   });
 })();
