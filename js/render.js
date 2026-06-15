@@ -15,6 +15,7 @@ const Render = {
       '嵌入式': '🔌',
       'PLC': '⚙️',
       '控制理论': '📈',
+      '前端': '🌐',
       'default': '📂'
     };
     container.innerHTML = projects

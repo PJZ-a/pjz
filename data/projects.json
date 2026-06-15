@@ -19,5 +19,11 @@
     "title": "双闭环直流调速系统（课堂/实验）",
     "tag": "控制理论",
     "desc": "使用 MATLAB/Simulink 建模转速-电流双闭环，设计 PI 调节器并完成触发电路校准、参数整定与动态特性测试。"
+  },
+  {
+    "title": "交互式 3D 太阳系模型",
+    "tag": "前端",
+    "desc": "基于 Three.js 构建的 Web 3D 太阳系模型，支持行星公转动画、视角缩放与拖拽交互，部署于 GitHub Pages。",
+    "link": "https://pjz-a.github.io/taiyangxi/"
   }
 ]
